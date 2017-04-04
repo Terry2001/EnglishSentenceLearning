@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.terry.myapplication.MainActivity" >
+    <item android:id="@+id/action_updateContent"
+        android:title="Update Content"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>
