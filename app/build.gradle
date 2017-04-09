@@ -4,8 +4,8 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.terry.myapplication"
-        minSdkVersion 23
+        applicationId "com.example.terry.myapplication_dd"
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -46,6 +46,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.+'
     compile 'com.fasterxml.jackson.core:jackson-core:2.9.+'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.+'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
     testCompile 'junit:junit:4.12'
 }

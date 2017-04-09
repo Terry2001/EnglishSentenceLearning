@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -218,11 +219,11 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Map<String, String>> getContent()
     {
-        List<Map<String, String>> list = new LinkedList<>();
+        List<Map<String, String>> list = new LinkedList<Map<String, String>>();
 
         try {
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput("content.txt")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput("content_dd.txt")));
 
             String line;
 
@@ -234,11 +235,11 @@ public class MainActivity extends AppCompatActivity {
                 if(line == null || line.equals("..."))
                     break;
 
-                Map<String, String> map = new HashMap<>();
+                Map<String, String> map = new HashMap<String, String>();
 
-                map.put("key", line);
+                map.put("key", randomWord(line));
 
-                map.put("value", br.readLine());
+                map.put("value", line.replace(" ",""));
 
                 list.add(map);
 
@@ -257,6 +258,25 @@ public class MainActivity extends AppCompatActivity {
         return list;
     }
 
+    private String randomWord(String line) {
+
+        String result="";
+
+        String[] arr = line.split(" ");
+
+        int len = arr.length;
+
+        for (int i = 0; i < len; i++) {
+            int idx = new Random().nextInt(arr.length);
+
+            result = result + (arr[idx]) + " ";
+
+            arr = ArrayUtils.remove(arr, idx);
+        }
+
+        return result;
+    }
+
     private void saveSetting()
     {
         try {
@@ -264,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
             //String json = "{\"index\":\"" + String.valueOf(index) + "\"}";
 
             ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> map = new HashMap<String, Object>();
 
             map.put("index", index);
 
@@ -319,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Integer> getIgnoreSentenceList()
     {
         if(ignoreSentenceList == null) {
-            ignoreSentenceList = new LinkedList<>();
+            ignoreSentenceList = new LinkedList<Integer>();
 
             Map<String, Object> setting = loadSetting();
 
@@ -337,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
     private Map<String, Object> loadSetting()
     {
 
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<String, Object>();
 
         String json = readText("mySetting.txt");
 
@@ -402,12 +422,12 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_updateContent) {
 
-            String content = downLoadText("http://7vzrom.com1.z0.glb.clouddn.com/content.txt?" + new Date().getTime());
+            String content = downLoadText("http://7vzrom.com1.z0.glb.clouddn.com/content_dd.txt?" + new Date().getTime());
 
             if(content != null && !content.trim().equals(""))
             {
                 this.contentList = null;
-                saveTextFile("content.txt", content);
+                saveTextFile("content_dd.txt", content);
                 getContent();
             }
 
