@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         Button btn_forgot = (Button) findViewById(R.id.btn_forgot);
         btn_remember = (Button) findViewById(R.id.btn_remember);
 
-        Button btn_first = (Button) findViewById(R.id.btn_first);
+        Button btn_back10 = (Button) findViewById(R.id.btn_back10);
+        Button btn_forward10 = (Button) findViewById(R.id.btn_forward10);
 
         txt1 =(TextView) findViewById(R.id.txt1);
         txt2 =(TextView) findViewById(R.id.txt2);
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(map.containsKey("index"))
             index = (Integer)map.get("index");
+
+        if(contentList == null) {
+            contentList = getContent();
+        }
 
         btn_prev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,11 +152,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_first.setOnClickListener(new View.OnClickListener() {
+        btn_back10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                index = 0;
+                index = index - 10;
+                if(index < 0)
+                    index = 0;
+
+                showQuiz();
+                step = 1;
+
+                saveSetting();
+
+                txt3.setText(String.valueOf(index));
+            }
+        });
+
+        btn_forward10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                index = index + 10;
+                if(index > contentList.size() - 1)
+                    index = contentList.size() -1;
+
                 showQuiz();
                 step = 1;
 
