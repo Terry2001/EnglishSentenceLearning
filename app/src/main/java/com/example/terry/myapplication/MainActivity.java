@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         Button btn_forgot = (Button) findViewById(R.id.btn_forgot);
         btn_remember = (Button) findViewById(R.id.btn_remember);
 
-        Button btn_back10 = (Button) findViewById(R.id.btn_back10);
-        Button btn_forward10 = (Button) findViewById(R.id.btn_forward10);
+        Button btn_prev_article = (Button) findViewById(R.id.btn_prev_article);
+        Button btn_next_article = (Button) findViewById(R.id.btn_next_article);
 
         txt1 =(TextView) findViewById(R.id.txt1);
         txt2 =(TextView) findViewById(R.id.txt2);
@@ -152,14 +152,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_back10.setOnClickListener(new View.OnClickListener() {
+        btn_prev_article.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                index = index - 10;
-                if(index < 0)
-                    index = 0;
+                while(true) {
+                    index--;
+                    if(index < 0){
+                        index = 0;
+                        break;
+                    }
 
+                    String sentence = contentList.get(index).get("key");
+                    if (sentence.indexOf("#") == 0)
+                        break;
+                }
                 showQuiz();
                 step = 1;
 
@@ -169,13 +176,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_forward10.setOnClickListener(new View.OnClickListener() {
+        btn_next_article.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                index = index + 10;
-                if(index > contentList.size() - 1)
-                    index = contentList.size() -1;
+                while(true) {
+                    index++;
+                    if(index > contentList.size() - 1){
+                        index = contentList.size() -1;
+                        break;
+                    }
+
+                    String sentence = contentList.get(index).get("key");
+                    if (sentence.indexOf("#") == 0)
+                        break;
+                }
 
                 showQuiz();
                 step = 1;
